@@ -1,4 +1,6 @@
+import { Flex } from "@radix-ui/themes";
 import Layout from "../components/Layout";
+import { MultiStepForm } from "../components/MultStepForm";
 
 const Dashboard = () => {
   return (
@@ -6,12 +8,9 @@ const Dashboard = () => {
       title="Dashboard (protected route)"
       description="This is a sample webpage showcasing auth and protected routes"
     >
-      <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut illo
-        necessitatibus fugit repellat obcaecati nobis optio iusto modi
-        reprehenderit laborum culpa quia, ex, doloremque quisquam, ipsam vel
-        quasi numquam perferendis?
-      </div>
+      <Flex direction="column" align="center">
+        <MultiStepForm />
+      </Flex>
     </Layout>
   );
 };
