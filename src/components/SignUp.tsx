@@ -10,20 +10,20 @@ import {
 } from "@radix-ui/themes";
 import { useAuth } from "../providers/AuthProvider";
 
-const SignIn = ({ handleIsSignIn }: { handleIsSignIn: () => void }) => {
-  const { onLogin } = useAuth();
+const SignUp = ({ handleIsSignIn }: { handleIsSignIn: () => void }) => {
+  const { onCreateAccount } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<null | string>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleSignIn = async () => {
+  const handleSignUp = async () => {
     setError(null);
     setIsLoading(true);
     try {
-      await onLogin({ email, password });
+      await onCreateAccount({ email, password });
     } catch (error) {
-      setError("Invalid email or password");
+      setError("Something went wrong");
     }
     setIsLoading(false);
   };
@@ -32,7 +32,7 @@ const SignIn = ({ handleIsSignIn }: { handleIsSignIn: () => void }) => {
     <Flex flexShrink="0" gap="6" direction="column" width="416px">
       <Card size="4">
         <Heading as="h3" size="6" trim="start" mb="5">
-          Sign in
+          Sign Up
         </Heading>
 
         <Box mb="5">
@@ -83,13 +83,12 @@ const SignIn = ({ handleIsSignIn }: { handleIsSignIn: () => void }) => {
             </Text>
           </Box>
         )}
-
         <Flex mt="6" justify="end" gap="3">
-          <Button variant="outline" onClick={handleIsSignIn}>
-            Create an account
+          <Button variant="soft" onClick={handleIsSignIn}>
+            Already have an Account? Sign in!
           </Button>
-          <Button onClick={handleSignIn} loading={isLoading}>
-            Sign in
+          <Button onClick={handleSignUp} loading={isLoading}>
+            Sign up
           </Button>
         </Flex>
       </Card>
@@ -97,4 +96,4 @@ const SignIn = ({ handleIsSignIn }: { handleIsSignIn: () => void }) => {
   );
 };
 
-export default SignIn;
+export default SignUp;

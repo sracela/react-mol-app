@@ -2,9 +2,16 @@ import { Flex } from "@radix-ui/themes";
 import SignIn from "../components/SignIn";
 import Layout from "../components/Layout";
 import { useAuth } from "../providers/AuthProvider";
+import { useState } from "react";
+import SignUp from "../components/SignUp";
 
 const Home = () => {
   const { token } = useAuth();
+  const [isSignIn, setIsSignIn] = useState(true);
+
+  const handleIsSignIn = () => {
+    setIsSignIn(!isSignIn);
+  };
   return (
     <Layout
       title="Welcome to Our Website"
@@ -12,7 +19,11 @@ const Home = () => {
     >
       {!token ? (
         <Flex direction="column" align="center">
-          <SignIn />
+          {isSignIn ? (
+            <SignIn handleIsSignIn={handleIsSignIn} />
+          ) : (
+            <SignUp handleIsSignIn={handleIsSignIn} />
+          )}
         </Flex>
       ) : (
         <div>

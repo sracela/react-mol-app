@@ -1,16 +1,19 @@
 import React, { ReactNode, createContext, useState } from "react";
-import { fakeAuth } from "../db/auth";
+import { createUser, fakeAuth } from "../db/auth";
 import { useLocation, useNavigate } from "react-router-dom";
+import { LoginPayload } from "../types/auth";
 
 interface AuthContextProps {
   token: string | null;
-  onLogin: () => void;
+  onLogin: (payload: LoginPayload) => Promise<void>;
+  onCreateAccount: (payload: LoginPayload) => Promise<void>;
   onLogout: () => void;
 }
 
-const initialState: AuthContextProps = {
+const initialState = {
   token: null,
-  onLogin: () => {},
+  onLogin: async (payload: LoginPayload) => {},
+  onCreateAccount: async (payload: LoginPayload) => {},
   onLogout: () => {},
 };
 
@@ -25,8 +28,17 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const location = useLocation();
   const [token, setToken] = useState<string | null>(null);
 
-  const handleLogin = async () => {
-    const token = await fakeAuth();
+  // this shouldn't be here, should be on an AdminProvider that takes care of all the users.
+  const handleCreateAccount = async ({ email, password }: LoginPayload) => {
+    const token = await createUser({ email, password });
+
+    setToken(token);
+    const origin = location.state?.from?.pathname || "/dashboard";
+    navigate(origin);
+  };
+
+  const handleLogin = async ({ email, password }: LoginPayload) => {
+    const token = await fakeAuth({ email, password });
 
     setToken(token);
     const origin = location.state?.from?.pathname || "/dashboard";
@@ -41,6 +53,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     token,
     onLogin: handleLogin,
     onLogout: handleLogout,
+    onCreateAccount: handleCreateAccount,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

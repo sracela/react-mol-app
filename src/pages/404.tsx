@@ -1,8 +1,13 @@
+import Layout from "../components/Layout";
+
 const NoMatch = () => {
   return (
-    <>
-      <h2>404 Not Found</h2>
-    </>
+    <Layout
+      title="404 Not Found"
+      description="This is a sample webpage showcasing auth and protected routes"
+    >
+      <div>Try with another url</div>
+    </Layout>
   );
 };
 
