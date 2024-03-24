@@ -1,6 +1,6 @@
 import { Flex } from "@radix-ui/themes";
 import SignIn from "../components/SignIn";
-import Layout from "../components/Layout";
+import Layout from "../components/layout/Layout";
 import { useAuth } from "../providers/AuthProvider";
 import { useState } from "react";
 import SignUp from "../components/SignUp";

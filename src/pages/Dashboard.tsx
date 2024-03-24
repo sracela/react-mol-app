@@ -1,6 +1,6 @@
 import { Flex } from "@radix-ui/themes";
-import Layout from "../components/Layout";
-import { MultiStepForm } from "../components/MultStepForm";
+import Layout from "../components/layout/Layout";
+import { MultiStepForm } from "../components/form";
 
 const Dashboard = () => {
   return (
